@@ -4,6 +4,7 @@
 #include "mstring.h"
 #include <string.h>
 #include "formula_core.h"
+
 static FormulaOper oper_test[]={
 	{"+",1,1,NULL,NULL,NULL},
 	{"-",1,1,NULL,NULL,NULL},
@@ -15,6 +16,7 @@ static FormulaOper oper_test[]={
 };
 static FormulaFunc func_test[]={
 	{"sin",NULL,NULL},
+	{"B",NULL,NULL},
 	{NULL,NULL,NULL}
 };
 int main(int agv, char *ags[])
@@ -30,6 +32,6 @@ int main(int agv, char *ags[])
 	stringarray_free(a);
 	// printf("%d",strfin(s,"7"));
 	printf("\n");
-	
+	printf("%lf\n",strtod("5646.65",NULL));
 }
 

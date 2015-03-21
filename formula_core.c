@@ -1,8 +1,11 @@
 #include "formula_core.h"
 //
 int priority(FormulaDict* dict,char* name){
+	if(!strcmp(name,"(")) return 0;
 	FormulaOper* oper=formuladict_getoperator(dict,name);
-	if(oper==NULL) return 0;
+	FormulaFunc* func=formuladict_getfunction(dict,name);
+	if(oper==NULL&&func==NULL) return 0;
+	else if(func!=NULL) return 10000;
 	else return oper->priority;
 }
 int isnumber(char* name){
@@ -14,15 +17,17 @@ int isnumber(char* name){
 //
 Mstring* formula_precedence(char* formula,FormulaDict* dict){
 	int operatorcount=dict->opercount;
-	Mstring* operators=(char**)malloc(sizeof(char*)*(operatorcount+3));
+	Mstring* operators=(char**)malloc(sizeof(char*)*(operatorcount+4));
 	operators[0]=strreplicate("(");
 	operators[1]=strreplicate(")");
-	for(int i=2;i<operatorcount+2;i++){
-		operators[i]=strreplicate(dict->opers[i-2]->name);
+	operators[2]=strreplicate(",");
+	for(int i=3;i<operatorcount+3;i++){
+		operators[i]=strreplicate(dict->opers[i-3]->name);
 	}
-	operators[operatorcount+2]=NULL;
+	operators[operatorcount+3]=NULL;
 	Mstring* splited_formulas=split(formula,operators);
-	Mstring* output=stringarray_filt(splited_formulas,"");
+	static const char* tokens[]={"",",",NULL};
+	Mstring* output=stringarray_filt(splited_formulas,tokens);
 	stringarray_free(operators);
 	stringarray_free(splited_formulas);
 	return output;
@@ -78,7 +83,10 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 		output[t++]=strreplicate(s_stack[stack_top]);
 	}
 	output[t++]=NULL;
-	return output;
+	static const char* tokens[]={"",NULL};
+	Mstring* out=stringarray_filt(output,tokens);
+	stringarray_free(output);
+	return out;
 }
 FormulaDict* formuladict_new(FormulaObject** objs,FormulaFunc** funcs,FormulaOper** opers){
 	FormulaDict* dict=(FormulaDict*)malloc(sizeof(FormulaDict));

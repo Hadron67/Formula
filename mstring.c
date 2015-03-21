@@ -122,10 +122,20 @@ void sort(int *a, int size)
 		}
 	}
 }
-Mstring* stringarray_filt(Mstring input[],const char* token){
-	int length;
+int stringarray_contains(Mstring input[],char* s){
 	for(int i=0;input[i]!=NULL;i++){
-		if(strcmp(input[i],token)){
+		if(!strcmp(input[i],s)) return 1;
+	}
+	return 0;
+}
+Mstring* stringarray_filt(Mstring input[],const char* token[]){
+	int length=0;
+	int tokencount;
+	int i,j;
+	for(tokencount=0;token[tokencount]!=NULL;tokencount++);
+	
+	for(i=0;input[i]!=NULL;i++){
+		if(!stringarray_contains(token,input[i])){
 			length++;
 		}
 	}
@@ -133,8 +143,8 @@ Mstring* stringarray_filt(Mstring input[],const char* token){
 	Mstring* _new=(char**)malloc(sizeof(char*)*length);
 	_new[length-1]=NULL;
 	length=0;
-	for(int i=0;input[i]!=NULL;i++){
-		if(strcmp(input[i],token)){
+	for(i=0;input[i]!=NULL;i++){
+		if(!stringarray_contains(token,input[i])){
 			_new[length++]=strreplicate(input[i]);
 		}
 	}

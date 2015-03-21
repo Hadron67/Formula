@@ -3,9 +3,9 @@
 #include <string.h>
 struct _FormulaTypedef;
 typedef void FormulaVariable;
-typedef FormulaVariable* (*FormulaFunction)(FormulaVariable* a);
+typedef FormulaVariable* (*FormulaFunction)(FormulaVariable* a[]);
 typedef FormulaVariable* (*FormulaOperator)(FormulaVariable* a,FormulaVariable* b);
-typedef FormulaVariable* (*FormulaInit)();
+typedef FormulaVariable* (*FormulaInit)(FormulaVariable* _this);
 typedef FormulaVariable* (*FormulaDelete)(FormulaVariable* _this);
 typedef FormulaVariable* (*FormulaCast)(FormulaVariable* from);
 //type cast function
