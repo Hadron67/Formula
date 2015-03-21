@@ -69,9 +69,6 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 			if(func!=NULL){
 				s_stack[stack_top++]=divided[i];
 			}
-			else{
-				printf("error: unknown symbol: %s \n",divided[i]);
-			}
 		}
 	}
 	while(stack_top-->0){

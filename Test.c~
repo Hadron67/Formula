@@ -22,7 +22,6 @@ int main(int agv, char *ags[])
 	char *s = "5*(2-4)";
 	FormulaDict* dict=formuladict_new(NULL,NULL,NULL);
 	formuladict_addoperators(dict,oper_test);
-	formuladict_addfunctions(dict,func_test);
 	//d[5]="(";
 	
 	Mstring* a=formula_reserve(ags[1],dict);

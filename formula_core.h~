@@ -1,8 +1,8 @@
 #ifndef FORMULA_CORE_H
 #define FORMULA_CORE_H
-#define isoperator(a,b) (formuladict_getoperator(a,b)!=NULL)
-#define isfunction(a,b) (formuladict_getfunction(a,b)!=NULL)
-#define isvariable(a,b) (formuladict_getobject(a,b)!=NULL)
+#define isoperator(a,b) (formuladict_getoperator(a,b)==NULL)
+#define isfunction(a,b) (formuladict_getfunction(a,b)==NULL)
+#define isvariable(a,b) (formuladict_getobject(a,b)==NULL)
 #include <stdlib.h>
 #include <stdio.h>
 #include "formula_typedef.h"
