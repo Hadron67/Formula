@@ -24,7 +24,8 @@ typedef struct _FormulaTypedef{
 //define a function
 typedef struct {
 	char* name;
-	FormulaTypedef* type_arg;
+	int argscount;
+	FormulaTypedef** type_arg; //pointer array
 	FormulaFunction func;
 }FormulaFunc;
 //define an operator

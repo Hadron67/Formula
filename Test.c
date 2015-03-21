@@ -15,9 +15,9 @@ static FormulaOper oper_test[]={
 	{NULL,0,0,NULL,NULL,NULL}
 };
 static FormulaFunc func_test[]={
-	{"sin",NULL,NULL},
-	{"B",NULL,NULL},
-	{NULL,NULL,NULL}
+	{"sin",1,NULL,NULL},
+	{"B",1,NULL,NULL},
+	{NULL,0,NULL,NULL}
 };
 int main(int agv, char *ags[])
 {
