@@ -31,8 +31,14 @@ Mstring* split(char *input, char *token[])
 	}
 	sort(enzyme, esize);
 	Mstring* output=(Mstring*)malloc(sizeof(Mstring)*(esize+2));
-	
-	output[0]=substr(input,0,enzyme[0]);
+	if(esize==0){
+		output[0]=strreplicate(input);
+		output[1]=NULL;
+		return output;
+	}
+	else{
+		output[0]=substr(input,0,enzyme[0]);
+	}
 	for(int i=0;i<esize-1;i++){
 		output[i+1]=substr(input,enzyme[i],enzyme[i+1]);
 	}
@@ -116,5 +122,22 @@ void sort(int *a, int size)
 		}
 	}
 }
-
+Mstring* stringarray_filt(Mstring input[],const char* token){
+	int length;
+	for(int i=0;input[i]!=NULL;i++){
+		if(strcmp(input[i],token)){
+			length++;
+		}
+	}
+	length++;
+	Mstring* _new=(char**)malloc(sizeof(char*)*length);
+	_new[length-1]=NULL;
+	length=0;
+	for(int i=0;input[i]!=NULL;i++){
+		if(strcmp(input[i],token)){
+			_new[length++]=strreplicate(input[i]);
+		}
+	}
+	return _new;
+}
 

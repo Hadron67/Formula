@@ -5,7 +5,7 @@ struct _FormulaTypedef;
 typedef void FormulaVariable;
 typedef FormulaVariable* (*FormulaFunction)(FormulaVariable* a);
 typedef FormulaVariable* (*FormulaOperator)(FormulaVariable* a,FormulaVariable* b);
-typedef FormulaVariable* (*FormulaAlloc)();
+typedef FormulaVariable* (*FormulaInit)();
 typedef FormulaVariable* (*FormulaDelete)(FormulaVariable* _this);
 typedef FormulaVariable* (*FormulaCast)(FormulaVariable* from);
 //type cast function
@@ -17,7 +17,8 @@ typedef struct {
 //information about a type
 typedef struct _FormulaTypedef{
 	char* _typename;
-	FormulaAlloc allocor;
+	int size;
+	FormulaInit constructor;
 	FormulaDelete destructor;
 }FormulaTypedef;
 //define a function
@@ -36,11 +37,7 @@ typedef struct {
 	FormulaOperator oper;
 }FormulaOper;
 
-//define algebra rule system
-typedef struct {
-	FormulaFunc* functions; //array
-	FormulaOper* operators; //array
-}Algebra;
+
 //FormulaObject is used in the formula interpretion.
 typedef struct {
 	char* variablename;
@@ -49,7 +46,5 @@ typedef struct {
 }FormulaObject;
 
 FormulaObject* formulaobject_array_get_object(char* name,FormulaObject* objects[]);
-FormulaOperator formulaalgebra_get_operator(char* name,Algebra* alg);
-FormulaFunction formulaalgebra_get_function(char* name,Algebra* alg);
 FormulaObject* formulaobject_new(char* name,FormulaTypedef* _typedef,FormulaVariable* variable);
 #endif
