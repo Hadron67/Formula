@@ -60,7 +60,7 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 					s_stack[stack_top++]=divided[i];
 				}
 				else{
-					if(priority(dict,divided[i])>=priority(dict,s_stack[stack_top-1])){
+					if(priority(dict,divided[i])>priority(dict,s_stack[stack_top-1])){
 						s_stack[stack_top++]=divided[i];
 					}
 					else{
@@ -86,6 +86,8 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 	static const char* tokens[]={"",NULL};
 	Mstring* out=stringarray_filt(output,tokens);
 	stringarray_free(output);
+	stringarray_free(s_stack);
+	stringarray_free(divided);
 	return out;
 }
 FormulaDict* formuladict_new(FormulaObject** objs,FormulaFunc** funcs,FormulaOper** opers){
