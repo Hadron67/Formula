@@ -1,50 +1,51 @@
 #ifndef FORMULA_TYPEDEF_H
 #define FORMULA_TYPEDEF_H
 #include <string.h>
-struct _FormulaTypedef;
+typedef struct _FormulaTypedef FormulaTypedef;
+typedef struct _FormulaObject FormulaObject;
+typedef struct _FormulaOper FormulaOper;
+typedef struct _FormulaFunc FormulaFunc;
 typedef void FormulaVariable;
-typedef FormulaVariable* (*FormulaFunction)(FormulaVariable* a[]);
-typedef FormulaVariable* (*FormulaOperator)(FormulaVariable* a,FormulaVariable* b);
-typedef FormulaVariable* (*FormulaInit)(FormulaVariable* _this);
-typedef FormulaVariable* (*FormulaDelete)(FormulaVariable* _this);
-typedef FormulaVariable* (*FormulaCast)(FormulaVariable* from);
+
+typedef FormulaObject* (*FormulaFunction)(FormulaObject* a);
+typedef FormulaObject* (*FormulaOperator)(FormulaObject* a,FormulaObject* b);
+typedef FormulaObject* (*FormulaInit)(FormulaObject* _this);
+typedef FormulaObject* (*FormulaDelete)(FormulaObject* _this);
+typedef FormulaObject* (*FormulaCast)(FormulaObject* from);
 //type cast function
 typedef struct {
-	struct _FormulaTypedef* type_from;
-	struct _FormulaTypedef* type_to;
+	FormulaTypedef* type_from;
+	FormulaTypedef* type_to;
 	FormulaCast formulacaster;
 }FormulaCastFunc;
 //information about a type
-typedef struct _FormulaTypedef{
+struct _FormulaTypedef{
 	char* _typename;
 	int size;
 	FormulaInit constructor;
 	FormulaDelete destructor;
-}FormulaTypedef;
+};
 //define a function
-typedef struct {
+struct _FormulaFunc{
 	char* name;
 	int argscount;
-	FormulaTypedef** type_arg; //pointer array
 	FormulaFunction func;
-}FormulaFunc;
+};
 //define an operator
-typedef struct {
+struct _FormulaOper{
 	char* name;
 	int priority;
 	int albel;
-	FormulaTypedef* type_arg1;
-	FormulaTypedef* type_arg2;
 	FormulaOperator oper;
-}FormulaOper;
+};
 
 
 //FormulaObject is used in the formula interpretion.
-typedef struct {
+struct _FormulaObject{
 	char* variablename;
 	FormulaTypedef* _typedef;
 	FormulaVariable* variable;
-}FormulaObject;
+};
 
 FormulaObject* formulaobject_array_get_object(char* name,FormulaObject* objects[]);
 FormulaObject* formulaobject_new(char* name,FormulaTypedef* _typedef,FormulaVariable* variable);

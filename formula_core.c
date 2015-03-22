@@ -95,6 +95,9 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 	stringarray_free(divided);
 	return out;
 }
+FormulaObject* formula_calculate(Mstring* reservedpolish,FormulaDict* dict){
+	//TODO:calculate a formula.
+}
 FormulaDict* formuladict_new(FormulaObject** objs,FormulaFunc** funcs,FormulaOper** opers){
 	FormulaDict* dict=(FormulaDict*)malloc(sizeof(FormulaDict));
 	dict->objs=objs;

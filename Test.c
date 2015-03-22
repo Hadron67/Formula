@@ -6,19 +6,19 @@
 #include "formula_core.h"
 
 static FormulaOper oper_test[]={
-	{",",0,1,NULL,NULL,NULL},
-	{"+",1,1,NULL,NULL,NULL},
-	{"-",1,1,NULL,NULL,NULL},
-	{"*",2,2,NULL,NULL,NULL},
-	{"/",2,2,NULL,NULL,NULL},
-	{"%",2,2,NULL,NULL,NULL},
-	{"=",1,3,NULL,NULL,NULL},
-	{NULL,0,0,NULL,NULL,NULL}
+	{",",0,1,NULL},
+	{"+",1,1,NULL},
+	{"-",1,1,NULL},
+	{"*",2,2,NULL},
+	{"/",2,2,NULL},
+	{"%",2,2,NULL},
+	{"=",1,3,NULL},
+	{NULL,0,0,NULL}
 };
 static FormulaFunc func_test[]={
-	{"sin",1,NULL,NULL},
-	{"B",1,NULL,NULL},
-	{NULL,0,NULL,NULL}
+	{"sin",1,NULL},
+	{"B",1,NULL},
+	{NULL,0,NULL}
 };
 int main(int agv, char *ags[])
 {
