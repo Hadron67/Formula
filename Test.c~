@@ -33,6 +33,9 @@ int main(int agv, char *ags[])
 	stringarray_free(a);
 	// printf("%d",strfin(s,"7"));
 	printf("\n");
-
+	const char* tokens[]={",",NULL};
+	const char* replacement[]={")(",NULL};
+	Mstring test=mstring_replace("B(sin(2)*8,cos(5)*4)",tokens,replacement);
+	printf("%s\n",test);
 }
 

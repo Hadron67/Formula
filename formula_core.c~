@@ -43,7 +43,6 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 	Mstring* output=(Mstring*)malloc(sizeof(Mstring)*(len+1));
 	int t=0;
 	Mstring* s_stack=(Mstring*)malloc(sizeof(Mstring)*(len+1));
-	
 	int stack_top=0;
 	for(int i=0;i<len;i++){
 		if(!strcmp(divided[i],"(")){
@@ -91,7 +90,7 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 	static const char* tokens[]={"",NULL};
 	Mstring* out=stringarray_filt(output,tokens);
 	stringarray_free(output);
-	free(s_stack);
+	stringarray_free(s_stack);
 	stringarray_free(divided);
 	return out;
 }

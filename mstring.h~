@@ -14,5 +14,4 @@ Mstring strreplicate(char* s);
 Mstring* stringarray_filt(Mstring input[],const char* token[]);
 int stringarray_contains(Mstring input[],char* s);
 Mstring* stringarray_replace(Mstring input[],const char* token[],const char* replacement[]);
-Mstring mstring_replace(char* input,char* tokens[],const char* replacement[]);
 #endif

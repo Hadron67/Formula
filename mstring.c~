@@ -188,7 +188,7 @@ Mstring mstring_replace(char* input,char* tokens[],const char* replacement[]){
 					for(int l=0;l<strlen(replacement[j]);l++){
 						*(t++)=replacement[j][l];
 					}
-					i+=k-1;
+					i+=k;
 					break;
 				}
 			}
