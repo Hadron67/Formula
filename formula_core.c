@@ -1,4 +1,7 @@
 #include "formula_core.h"
+#include "formula_typedef.h"
+// basic type
+#include "formula_float.h"
 //
 int priority(FormulaDict* dict,char* name){
 	if(!strcmp(name,"(")) return -1;
@@ -42,8 +45,7 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 	for(len=0;divided[len]!=NULL;len++);
 	Mstring* output=(Mstring*)malloc(sizeof(Mstring)*(len+1));
 	int t=0;
-	Mstring* s_stack=(Mstring*)malloc(sizeof(Mstring)*(len+1));
-	
+	Mstring s_stack[len+1];
 	int stack_top=0;
 	for(int i=0;i<len;i++){
 		if(!strcmp(divided[i],"(")){
@@ -91,12 +93,32 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 	static const char* tokens[]={"",NULL};
 	Mstring* out=stringarray_filt(output,tokens);
 	stringarray_free(output);
-	free(s_stack);
+	//free(s_stack);
 	stringarray_free(divided);
 	return out;
 }
 FormulaObject* formula_calculate(Mstring* reservedpolish,FormulaDict* dict){
 	//TODO:calculate a formula.
+	int length;
+	for(length=0;reservedpolish[length]!=NULL;length++);
+	FormulaObject* result_stack[length];
+	FormulaObject** handle=result_stack;
+	
+	for(int i=0;i<length;i++){
+		FormulaOper* oper;
+		if(isnumber(reservedpolish[i])){
+			double* temp=(double*)malloc(sizeof(double));
+			*temp=strtod(reservedpolish[i],NULL);
+			*(handle++)=formulaobject_new("",&type_float,temp);
+		}
+		else if(NULL!=(oper=formuladict_getoperator(dict,reservedpolish[i]))){
+			FormulaObject* temp=oper->oper(handle-1);
+			formulaobject_free(*(--handle));
+			formulaobject_free(*(--handle));
+			*(handle++)=temp;
+		}
+	}
+	return *(--handle);
 }
 FormulaDict* formuladict_new(FormulaObject** objs,FormulaFunc** funcs,FormulaOper** opers){
 	FormulaDict* dict=(FormulaDict*)malloc(sizeof(FormulaDict));

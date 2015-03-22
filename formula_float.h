@@ -1,17 +1,15 @@
 #ifndef FORMULA_FLOAT_H
 #define FORMULA_FLOAT_H
 #include<stdlib.h>
-static FormulaVariable* float_init();
-static FormulaVariable* float_delete(FormulaVariable* _this);
-static FormulaVariable* float_plus(FormulaVariable* a,FormulaVariable* b);
-static FormulaTypedef type_float={
-	"float",
-	sizeof(float),
-	float_init,
-	float_delete
-};
-static FormulaOper oper_float[]={
-	{"+",1,1,&type_float,&type_float,float_plus},
-	{NULL,0,0,NULL,NULL,NULL}
-};
+#include "formula_typedef.h"
+FormulaObject* float_init(FormulaObject* _this);
+void float_delete(FormulaObject* _this);
+FormulaObject* float_plus(FormulaObject** handle);
+FormulaObject* float_minus(FormulaObject** handle);
+FormulaObject* float_multiply(FormulaObject** handle);
+FormulaObject* float_divide(FormulaObject** handle);
+extern FormulaTypedef type_float;
+extern FormulaOper oper_float[];
+
+FormulaObject* formula_float(double a);
 #endif

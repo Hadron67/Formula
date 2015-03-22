@@ -1,16 +1,17 @@
 #ifndef FORMULA_TYPEDEF_H
 #define FORMULA_TYPEDEF_H
 #include <string.h>
+#include "mstring.h"
 typedef struct _FormulaTypedef FormulaTypedef;
 typedef struct _FormulaObject FormulaObject;
 typedef struct _FormulaOper FormulaOper;
 typedef struct _FormulaFunc FormulaFunc;
 typedef void FormulaVariable;
 
-typedef FormulaObject* (*FormulaFunction)(FormulaObject* a);
-typedef FormulaObject* (*FormulaOperator)(FormulaObject* a,FormulaObject* b);
+typedef FormulaObject* (*FormulaFunction)(FormulaObject** handle);
+typedef FormulaObject* (*FormulaOperator)(FormulaObject** handle);
 typedef FormulaObject* (*FormulaInit)(FormulaObject* _this);
-typedef FormulaObject* (*FormulaDelete)(FormulaObject* _this);
+typedef void (*FormulaDelete)(FormulaObject* _this);
 typedef FormulaObject* (*FormulaCast)(FormulaObject* from);
 //type cast function
 typedef struct {
@@ -36,6 +37,8 @@ struct _FormulaOper{
 	char* name;
 	int priority;
 	int albel;
+	char* type_arg1;// just for check.
+	char* type_arg2;
 	FormulaOperator oper;
 };
 
@@ -49,4 +52,5 @@ struct _FormulaObject{
 
 FormulaObject* formulaobject_array_get_object(char* name,FormulaObject* objects[]);
 FormulaObject* formulaobject_new(char* name,FormulaTypedef* _typedef,FormulaVariable* variable);
+void formulaobject_free(FormulaObject* obj);
 #endif

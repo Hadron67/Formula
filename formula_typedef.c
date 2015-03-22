@@ -12,8 +12,18 @@ FormulaObject* formulaobject_array_get_object(char* name,FormulaObject* objects[
 
 FormulaObject* formulaobject_new(char* name,FormulaTypedef* _typedef,FormulaVariable* variable){
 	FormulaObject* _this=(FormulaObject*)malloc(sizeof(FormulaObject));
-	_this->variablename=name;
+	if(name!=NULL) _this->variablename=strreplicate(name);
 	_this->_typedef=_typedef;
-	_this->variable=variable;
+	if(variable==NULL){
+		_this->variable=(FormulaVariable*)malloc(_typedef->size);
+		_typedef->constructor(_this);
+	}
+	else{
+		_this->variable=variable;
+	}
 	return _this;
+}
+void formulaobject_free(FormulaObject* obj){
+	obj->_typedef->destructor(obj->variable);
+	free(obj);
 }
