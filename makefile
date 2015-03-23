@@ -1,6 +1,6 @@
 XX=gcc
 OBJECTS=mstring.o formula_typedef.o main.o formula_core.o formula_float.o
-ARGS= -std=c99 -g -ggdb
+ARGS= -std=c99 -g -ggdb -lm
 main:$(OBJECTS)
 	$(XX) -o main $(OBJECTS) $(ARGS)
 	rm $(OBJECTS)

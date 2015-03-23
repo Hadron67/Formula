@@ -106,15 +106,25 @@ FormulaObject* formula_calculate(Mstring* reservedpolish,FormulaDict* dict){
 	
 	for(int i=0;i<length;i++){
 		FormulaOper* oper;
+		FormulaFunc* func;
 		if(isnumber(reservedpolish[i])){
 			double* temp=(double*)malloc(sizeof(double));
 			*temp=strtod(reservedpolish[i],NULL);
 			*(handle++)=formulaobject_new("",&type_float,temp);
 		}
-		else if(NULL!=(oper=formuladict_getoperator(dict,reservedpolish[i]))){
-			FormulaObject* temp=oper->oper(handle-1);
-			formulaobject_free(*(--handle));
-			formulaobject_free(*(--handle));
+		else if(handle-result_stack>=2){
+			if(NULL!=(oper=formuladict_findoperator(dict,handle[-1]->_typedef->_typename,handle[-2]->_typedef->_typename,reservedpolish[i]))){
+				FormulaObject* temp=oper->oper(handle-1);
+				formulaobject_free(*(--handle));
+				formulaobject_free(*(--handle));
+				*(handle++)=temp;
+			}
+		}
+		else if(NULL!=(func=formuladict_getfunction(dict,reservedpolish[i]))){
+			FormulaObject* temp=func->func(handle-1);
+			for(int j=0;j<func->argscount;j++){
+				formulaobject_free(*(--handle));
+			}
 			*(handle++)=temp;
 		}
 	}
@@ -169,6 +179,22 @@ FormulaOper* formuladict_getoperator(FormulaDict* dict,char* name){
 	for(int i=0;i<dict->opercount;i++){
 		if(!strcmp(name,dict->opers[i]->name)){
 			return dict->opers[i];
+		}
+	}
+	return NULL;
+}
+FormulaOper* formuladict_findoperator(FormulaDict* dict,char* type1,char* type2,char* name){
+	if(dict->opers==NULL) return NULL;
+	for(int i=0;i<dict->opercount;i++){
+		if(dict->opers[i]->albel){
+			if(!strcmp(dict->opers[i]->type_arg1,type1)&&!strcmp(dict->opers[i]->type_arg2,type2)||!strcmp(dict->opers[i]->type_arg1,type2)&&!strcmp(dict->opers[i]->type_arg2,type1)){
+				if(!strcmp(name,dict->opers[i]->name)) return dict->opers[i];
+			}
+		}
+		else{
+			if(!strcmp(dict->opers[i]->type_arg1,type1)&&!strcmp(dict->opers[i]->type_arg1,type1)){
+				return dict->opers[i];
+			}
 		}
 	}
 	return NULL;
