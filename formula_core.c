@@ -101,8 +101,9 @@ FormulaObject* formula_calculate(Mstring* reservedpolish,FormulaDict* dict){
 	//TODO:calculate a formula.
 	int length;
 	for(length=0;reservedpolish[length]!=NULL;length++);
-	FormulaObject* result_stack[length];
-	FormulaObject** handle=result_stack;
+	FormulaObject* result_stack[length+1];
+	result_stack[0]=NULL;
+	FormulaObject** handle=result_stack+1;
 	
 	for(int i=0;i<length;i++){
 		FormulaOper* oper;
@@ -111,38 +112,44 @@ FormulaObject* formula_calculate(Mstring* reservedpolish,FormulaDict* dict){
 			double* temp=(double*)malloc(sizeof(double));
 			*temp=strtod(reservedpolish[i],NULL);
 			*(handle++)=formulaobject_new("",&type_float,temp);
+			continue;
 		}
-		else if(handle-result_stack>=2){
+		if(handle-result_stack>=3){
 			if(NULL!=(oper=formuladict_findoperator(dict,handle[-1]->_typedef->_typename,handle[-2]->_typedef->_typename,reservedpolish[i]))){
 				FormulaObject* temp=oper->oper(handle-1);
 				formulaobject_free(*(--handle));
 				formulaobject_free(*(--handle));
 				*(handle++)=temp;
+				continue;
 			}
 		}
-		else if(NULL!=(func=formuladict_getfunction(dict,reservedpolish[i]))){
+		if(NULL!=(func=formuladict_getfunction(dict,reservedpolish[i]))){
 			FormulaObject* temp=func->func(handle-1);
 			for(int j=0;j<func->argscount;j++){
 				formulaobject_free(*(--handle));
 			}
 			*(handle++)=temp;
+			continue;
 		}
 	}
 	return *(--handle);
 }
-FormulaDict* formuladict_new(FormulaObject** objs,FormulaFunc** funcs,FormulaOper** opers){
+FormulaDict* formuladict_new(){
 	FormulaDict* dict=(FormulaDict*)malloc(sizeof(FormulaDict));
-	dict->objs=objs;
-	dict->funcs=funcs;
-	dict->opers=opers;
+	dict->objs=NULL;
+	dict->funcs=NULL;
+	dict->opers=NULL;
+	dict->objcount=0;
+	dict->funccount=0;
+	dict->opercount=0;
 	return dict;
 }
 void formuladict_addoperators(FormulaDict* dict,FormulaOper* operators){
 	int opercount=0;
 	for(opercount=0;operators[opercount].name!=NULL;opercount++);
-	dict->opercount=opercount;
+	dict->opercount+=opercount;
 	if(dict->opers!=NULL){
-		dict->opers=(FormulaOper**)realloc(dict->opers,sizeof(FormulaOper**)*opercount);
+		dict->opers=(FormulaOper**)realloc(dict->opers,sizeof(FormulaOper**)*dict->opercount);
 	}
 	else{
 		dict->opers=(FormulaOper**)malloc(sizeof(FormulaOper**)*opercount);
@@ -154,9 +161,9 @@ void formuladict_addoperators(FormulaDict* dict,FormulaOper* operators){
 void formuladict_addfunctions(FormulaDict* dict,FormulaFunc* funcs){
 	int funccount;
 	for(funccount=0;funcs[funccount].name!=NULL;funccount++);
-	dict->funccount=funccount;
+	dict->funccount+=funccount;
 	if(dict->funcs!=NULL){
-		dict->funcs=(FormulaFunc**)realloc(dict->funcs,sizeof(void*)*funccount);
+		dict->funcs=(FormulaFunc**)realloc(dict->funcs,sizeof(void*)*dict->opercount);
 	}
 	else{
 		dict->funcs=(FormulaFunc**)malloc(sizeof(void*)*funccount);

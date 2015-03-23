@@ -37,23 +37,23 @@ void float_delete(FormulaObject* _this){
 	free(_this->variable);
 }
 FormulaObject* float_plus(FormulaObject** handle){
-	double a1=Forfloat_get(handle[0]);
-	double a2=Forfloat_get(handle[-1]);
+	double a2=Forfloat_get(handle[0]);
+	double a1=Forfloat_get(handle[-1]);
 	return formula_float(a1+a2);
 }
 FormulaObject* float_minus(FormulaObject** handle){
-	double a1=Forfloat_get(handle[0]);
-	double a2=Forfloat_get(handle[-1]);
+	double a2=Forfloat_get(handle[0]);
+	double a1=Forfloat_get(handle[-1]);
 	return formula_float(a1-a2);
 }
 FormulaObject* float_multiply(FormulaObject** handle){
-	double a1=Forfloat_get(handle[0]);
-	double a2=Forfloat_get(handle[-1]);
+	double a2=Forfloat_get(handle[0]);
+	double a1=Forfloat_get(handle[-1]);
 	return formula_float(a1*a2);
 }
 FormulaObject* float_divide(FormulaObject** handle){
-	double a1=Forfloat_get(handle[0]);
-	double a2=Forfloat_get(handle[-1]);
+	double a2=Forfloat_get(handle[0]);
+	double a1=Forfloat_get(handle[-1]);
 	return formula_float(a1/a2);
 }
 FormulaObject* float_sin(FormulaObject** handle){

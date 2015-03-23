@@ -15,14 +15,11 @@ typedef struct {
 	int funccount;
 	int opercount;
 }FormulaDict;
-typedef struct {
-	
-}FormulaCalculator;
 Mstring* formula_precedence(char* formula,FormulaDict* dict);
 // transform to reserved polish expression.
 Mstring* formula_reserve(char* formula,FormulaDict* dict);
 FormulaObject* formula_calculate(Mstring* reservedpolish,FormulaDict* dict);
-FormulaDict* formuladict_new(FormulaObject** objs,FormulaFunc** funcs,FormulaOper** opers);
+FormulaDict* formuladict_new();
 void formuladict_addoperators(FormulaDict* dict,FormulaOper* operators);
 void formuladict_addfunctions(FormulaDict* dict,FormulaFunc* funcs);
 FormulaFunc* formuladict_getfunction(FormulaDict* dict,char* name);

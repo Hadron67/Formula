@@ -24,6 +24,7 @@ FormulaObject* formulaobject_new(char* name,FormulaTypedef* _typedef,FormulaVari
 	return _this;
 }
 void formulaobject_free(FormulaObject* obj){
-	obj->_typedef->destructor(obj->variable);
+	obj->_typedef->destructor(obj);
+	free(obj->variablename);
 	free(obj);
 }

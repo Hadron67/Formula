@@ -92,7 +92,7 @@ int strfine(const char* input,const char* token){
 	}
 	return -1;
 }
-Mstring strreplicate(char* s){
+Mstring strreplicate(const char* s){
 	int l=strlen(s);
 	Mstring output=(Mstring)malloc(sizeof(char)*(l+1));
 	for(int i=0;i<l;i++){
@@ -122,7 +122,7 @@ void sort(int *a, int size)
 		}
 	}
 }
-int stringarray_contains(Mstring input[],char* s){
+int stringarray_contains(Mstring input[],const char* s){
 	for(int i=0;input[i]!=NULL;i++){
 		if(!strcmp(input[i],s)) return 1;
 	}
@@ -170,7 +170,7 @@ Mstring* stringarray_replace(Mstring input[],const char* token[],const char* rep
 	}
 	return output;
 }
-Mstring mstring_replace(char* input,char* tokens[],const char* replacement[]){
+Mstring mstring_replace(char* input,const char* tokens[],const char* replacement[]){
 	char temp[1000];
 	char* t=temp;
 	int tokencount;

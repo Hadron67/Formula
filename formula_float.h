@@ -11,6 +11,11 @@ FormulaObject* float_divide(FormulaObject** handle);
 
 FormulaObject* float_sin(FormulaObject** handle);
 FormulaObject* float_cos(FormulaObject** handle);
+FormulaObject* float_tan(FormulaObject** handle);
+FormulaObject* float_cot(FormulaObject** handle);
+FormulaObject* float_sec(FormulaObject** handle);
+FormulaObject* float_csc(FormulaObject** handle);
+FormulaObject* float_ln(FormulaObject** handle);
 extern FormulaTypedef type_float;
 extern FormulaOper oper_float[];
 extern FormulaFunc func_float[];
