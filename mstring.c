@@ -24,8 +24,6 @@ Mstring* split(char *input, char *token[])
 				enzyme[esize++] = p1;
 				enzyme[esize++]=p2;
 				for(int i=p1;i<p2;i++) input_temp[i]='\1';
-				//input_temp[p]='\1';
-				//printf("%d :  %s\n", p1, token[i]);
 			}
 		}
 	}
@@ -170,9 +168,8 @@ Mstring* stringarray_replace(Mstring input[],const char* token[],const char* rep
 	}
 	return output;
 }
-Mstring mstring_replace(char* input,const char* tokens[],const char* replacement[]){
-	char temp[1000];
-	char* t=temp;
+void mstring_replace(char* input,const char* tokens[],const char* replacement[],char* output){
+	char* t=output;
 	int tokencount;
 	for(tokencount=0;tokens[tokencount]!=NULL;tokencount++);
 	int j;
@@ -198,6 +195,6 @@ Mstring mstring_replace(char* input,const char* tokens[],const char* replacement
 		}
 	}
 	*(t++)='\0';
-	Mstring output=strreplicate(temp);
-	return output;
+	//Mstring output=strreplicate(temp);
+	//return output;
 }

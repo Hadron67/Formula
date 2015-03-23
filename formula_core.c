@@ -1,5 +1,6 @@
 #include "formula_core.h"
 #include "formula_typedef.h"
+#define isnum(a) ((a)>='0'&&(a<='9'))
 // basic type
 #include "formula_float.h"
 //
@@ -17,11 +18,33 @@ int isnumber(char* name){
 	}
 	return 1;
 }
+void addzero(char* input,char* output){
+	char* t=output;
+	int len=strlen(input);
+	for(int i=0;i<len;i++){
+		if(i==0&&i<len-1){
+			if(input[i]=='-'){
+				*(t++)='0';
+			}
+		}
+		else {
+			if(input[i]=='-'&&isnum(input[i-1])){
+				*(t++)='0';
+			}
+		}
+		*(t++)=input[i];
+	}
+	*(t++)='\0';
+}
 //
 Mstring* formula_precedence(char* formula,FormulaDict* dict){
 	const char* tokens_replace[]={",",NULL};
 	const char* replacement[]={")(",NULL};
-	Mstring formula1=mstring_replace(formula,tokens_replace,replacement);
+	int len=strlen(formula);
+	char temp[len*2];
+	addzero(formula,temp);
+	char* formula1[len*2];
+	mstring_replace(temp,tokens_replace,replacement,formula1);
 	int operatorcount=dict->opercount;
 	Mstring* operators=(char**)malloc(sizeof(char*)*(operatorcount+4));
 	operators[0]=strreplicate("(");
@@ -36,7 +59,6 @@ Mstring* formula_precedence(char* formula,FormulaDict* dict){
 	Mstring* output=stringarray_filt(splited_formulas,tokens);
 	stringarray_free(operators);
 	stringarray_free(splited_formulas);
-	free(formula1);
 	return output;
 }
 Mstring* formula_reserve(char* formula,FormulaDict* dict){

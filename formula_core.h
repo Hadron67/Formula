@@ -3,6 +3,7 @@
 #define isoperator(a,b) (formuladict_getoperator(a,b)!=NULL)
 #define isfunction(a,b) (formuladict_getfunction(a,b)!=NULL)
 #define isvariable(a,b) (formuladict_getobject(a,b)!=NULL)
+#define FORMULA_MAX_LENGTH
 #include <stdlib.h>
 #include <stdio.h>
 #include "formula_typedef.h"

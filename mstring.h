@@ -7,7 +7,7 @@ void sort(int *a,int );
 int strfin(const char*,const char *);
 Mstring *split(char *input, char *token[]);
 int strfine(const char* input,const char* token);
-Mstring mstring_replace(char* input,const char* tokens[],const char* replacement[]);
+void mstring_replace(char* input,const char* tokens[],const char* replacement[],char* output);
 // notice that the elements of the array can't be read-only in the following function.
 void stringarray_free(Mstring _this[]);
 Mstring strreplicate(const char* s);
