@@ -71,7 +71,7 @@ Mstring* formula_reserve(char* formula,FormulaDict* dict){
 						s_stack[stack_top++]=divided[i];
 					}
 					else{
-						while(priority(dict,divided[i])<=priority(dict,s_stack[stack_top-1])){
+						while(priority(dict,divided[i])<priority(dict,s_stack[stack_top-1])){
 							output[t++]=strreplicate(s_stack[--stack_top]);
 						}
 						s_stack[stack_top++]=divided[i];
