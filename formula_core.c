@@ -28,7 +28,7 @@ void addzero(char* input,char* output){
 			}
 		}
 		else {
-			if(input[i]=='-'&&isnum(input[i-1])){
+			if(input[i]=='-'&&!isnum(input[i-1])){
 				*(t++)='0';
 			}
 		}
